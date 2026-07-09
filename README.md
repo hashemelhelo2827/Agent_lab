@@ -61,7 +61,7 @@ flowchart TB
     Lab1 -->|"<b>LangChain Chains</b>"| Lab2
     Lab2 -->|"<b>RAG Retrieval</b>"| Lab3
     Lab3 -->|"<b>State Machines</b>"| Lab4
-    Lab4 -....->|"<b>?</b>"| Next
+    Lab4 -.->|"<b>Next →</b>"| Next
 
     classDef input fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
     classDef file fill:#ffffff,stroke:#546e7a,stroke-width:1px,color:#000
