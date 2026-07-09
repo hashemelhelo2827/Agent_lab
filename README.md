@@ -3,34 +3,77 @@
 A progressive hands-on journey through LLM application development — from raw OpenAI API calls to multi-agent LangGraph workflows.
 
 ```mermaid
-flowchart LR
-    subgraph Lab1["01 — OpenAI Basics"]
-        O1["recipe_generator<br/><i>JSON structured output</i>"]
-        O2["trip_planner<br/><i>Prompt engineering</i>"]
-        O3["ticket_classifier<br/><i>Few-shot + JSON mode</i>"]
+flowchart TB
+    subgraph Lab1["🗄️ 01 — OpenAI Basics"]
+        direction TB
+        A0["<b>Input</b><br/><i>User provides ingredients,<br/>location, or complaint</i>"]:::input
+        A1["<b>recipe_generator.py</b><br/><i>3 ingredients → JSON recipe</i>"]:::file
+        A2["<b>trip_planner.py</b><br/><i>Location + days → itinerary</i>"]:::file
+        A3["<b>ticket_classifier.py</b><br/><i>Complaint → sentiment,<br/>dept, urgency, order ID</i>"]:::file
+        A["<b>⚡ Key Skill</b><br/>JSON structured output<br/>via OpenAI API"]:::skill
+        A1 ~~~ A2 ~~~ A3
+        A1 --> A
+        A2 --> A
+        A3 --> A
     end
-    subgraph Lab2["02 — LangChain + Pydantic"]
-        L1["ticket_router<br/><i>ChatPromptTemplate</i>"]
-        L2["product_tagger<br/><i>Pydantic validation</i>"]
-        L3["customs_manifest_analyzer<br/><i>Nested Pydantic models</i>"]
+    subgraph Lab2["📦 02 — LangChain + Pydantic"]
+        direction TB
+        B1["<b>ticket_router.py</b><br/><i>LangChain ticket classifier<br/>with ChatPromptTemplate</i>"]:::file
+        B2["<b>product_tagger.py</b><br/><i>Product categorization<br/>+ restricted item detection</i>"]:::file
+        B3["<b>customs_manifest_analyzer.py</b><br/><i>Nested cargo manifests<br/>+ hazard detection</i>"]:::file
+        B["<b>⚡ Key Skill</b><br/>Pydantic schemas +<br/>LangChain chains"]:::skill
+        B1 --- B2 --- B3
+        B1 --> B
+        B2 --> B
+        B3 --> B
     end
-    subgraph Lab3["03 — RAG + Chroma DB"]
-        R1["customs_rag<br/><i>Text splitting + retrieval</i>"]
-        R2["baggage_routing_rag<br/><i>RunnableParallel</i>"]
-        R3["biodome_inspection_rag<br/><i>Discriminated unions</i>"]
+    subgraph Lab3["🔍 03 — RAG + Chroma Vector DB"]
+        direction TB
+        C1["<b>customs_rag.py</b><br/><i>Cargo analysis vs<br/>rulebook.txt laws</i>"]:::file
+        C2["<b>baggage_routing_rag.py</b><br/><i>Baggage screening vs<br/>baggage_rules.txt</i>"]:::file
+        C3["<b>biodome_inspection_rag.py</b><br/><i>Bio-dome cargo vs<br/>biodome_rules.txt</i>"]:::file
+        R["<b>📜 Rules</b><br/>rulebook.txt<br/>baggage_rules.txt<br/>biodome_rules.txt"]:::rules
+        C["<b>⚡ Key Skill</b><br/>Chunk → Embed →<br/>Retrieve → Augment"]:::skill
+        C1 --- C2 --- C3
+        R -.- C1
+        R -.- C2
+        R -.- C3
+        C1 --> C
+        C2 --> C
+        C3 --> C
     end
-    subgraph Lab4["04 — LangGraph Agents"]
-        G1["code_generator_agent<br/><i>Self-correction loop</i>"]
-        G2["email_triage_agent<br/><i>Branching workflows</i>"]
-        G3["research_agent<br/><i>Parallel workers + validation</i>"]
+    subgraph Lab4["🤖 04 — LangGraph Agents"]
+        direction TB
+        D1["<b>code_generator_agent.py</b><br/><i>Generate → Evaluate<br/>→ Loop (max 3x)</i>"]:::file
+        D2["<b>email_triage_agent.py</b><br/><i>Triage → Route to<br/>Escalation or Standard</i>"]:::file
+        D3["<b>research_agent.py</b><br/><i>Questions → Parallel<br/>Research → Fact-check</i>"]:::file
+        D["<b>⚡ Key Skill</b><br/>Stateful graphs +<br/>conditional branching"]:::skill
+        D1 --- D2 --- D3
+        D1 --> D
+        D2 --> D
+        D3 --> D
     end
-    Lab1 -->|"LangChain Chains"| Lab2
-    Lab2 -->|"RAG Retrieval"| Lab3
-    Lab3 -->|"State Machines"| Lab4
-    style Lab1 fill:#e1f5fe,stroke:#0288d1,color:#000
-    style Lab2 fill:#e8f5e9,stroke:#388e3c,color:#000
-    style Lab3 fill:#fff3e0,stroke:#f57c00,color:#000
-    style Lab4 fill:#fce4ec,stroke:#d32f2f,color:#000
+    subgraph Next["⏭️ 05 — Next Lab"]
+        direction TB
+        E["<b>Coming soon</b>"]:::empty
+    end
+
+    Lab1 -->|"<b>LangChain Chains</b>"| Lab2
+    Lab2 -->|"<b>RAG Retrieval</b>"| Lab3
+    Lab3 -->|"<b>State Machines</b>"| Lab4
+    Lab4 -....->|"<b>?</b>"| Next
+
+    classDef input fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
+    classDef file fill:#ffffff,stroke:#546e7a,stroke-width:1px,color:#000
+    classDef skill fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#000
+    classDef rules fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
+    classDef empty fill:#f5f5f5,stroke:#9e9e9e,stroke-width:1px,stroke-dasharray:5 5,color:#000
+
+    style Lab1 fill:#e1f5fe,stroke:#0288d1,stroke-width:3px,color:#000
+    style Lab2 fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
+    style Lab3 fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
+    style Lab4 fill:#fce4ec,stroke:#d32f2f,stroke-width:3px,color:#000
+    style "⏭️ 05 — Next Lab" fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px,stroke-dasharray:8 4,color:#000
 ```
 
 ---
