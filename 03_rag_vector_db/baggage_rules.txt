@@ -1,0 +1,3 @@
+Rule A: Any luggage containing power banks, loose batteries, or e-cigarettes cannot go in cargo. It requires manual screening at the checkpoint.
+Rule B: Normal clothing, shoes, and toiletries are safe for standard automated routing. No manual screening needed.
+Rule C: Passengers traveling to international destinations (Flight numbers starting with 'INT') must be routed to Gate Group C. All domestic flights (Flight numbers starting with 'DOM') go to Gate Group A.

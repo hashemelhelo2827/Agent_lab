@@ -1,0 +1,4 @@
+Protocol Alpha: Any biomass cargo that is perishable and has a log temperature above 10.0 degrees Celsius is at risk of bacterial rot. It must be routed to quarantine_hold. If it is under 10.0 degrees, it goes to refrigerated_storage.
+Protocol Beta: Machinery items utilizing Nuclear power sources or containing lithium batteries are considered high hazard and must strictly be routed to quarantine_hold for radiation/fire tracking.
+Protocol Gamma: Standard machinery (Solar) and non-perishable biomass go straight to standard_clearance.
+Protocol Override: If a mixed manifest contains even ONE item flagged for quarantine_hold by Protocol Alpha or Beta, the entire manifest's inspection_action switches to quarantine_hold.

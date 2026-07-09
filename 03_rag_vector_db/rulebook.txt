@@ -1,0 +1,9 @@
+Rule 101: All electronic items, consumer electronics, or power banks containing Lithium-Ion batteries are classified as High Risk. They strictly require hazard isolation due to fire risks.
+
+Rule 102: Food items, perishable goods, fresh agricultural produce, and dairy products are classified as Medium Risk. They require refrigeration documentation but do not require hazard isolation.
+
+Rule 103: Standard consumer dry goods like clothing, footwear, textiles, plastic toys, and paper books are classified as Low Risk. They do not require hazard isolation.
+
+Rule 104: Industrial chemicals, compressed gases, aerosol cans, and flammable liquids are classified as High Risk. They strictly require specialized hazard isolation protocols.
+
+Rule 105: Medical supplies, sterile equipment, and pharmaceutical packaging are classified as Medium Risk. They require customs inspection but do not require hazard isolation.
