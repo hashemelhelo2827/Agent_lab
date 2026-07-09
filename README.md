@@ -73,7 +73,7 @@ flowchart TB
     style Lab2 fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
     style Lab3 fill:#fff3e0,stroke:#f57c00,stroke-width:3px,color:#000
     style Lab4 fill:#fce4ec,stroke:#d32f2f,stroke-width:3px,color:#000
-    style "⏭️ 05 — Next Lab" fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px,stroke-dasharray:8 4,color:#000
+    style "Next" fill:#f5f5f5,stroke:#9e9e9e,stroke-width:2px,stroke-dasharray:8 4,color:#000
 ```
 
 ---
