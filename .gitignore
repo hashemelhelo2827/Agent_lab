@@ -5,3 +5,6 @@ chroma_db/
 __pycache__/
 *.pyc
 markers/
+graphify-out/
+note.pdf
+New Text Document.txt
