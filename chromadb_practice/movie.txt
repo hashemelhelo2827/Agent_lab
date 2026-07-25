@@ -1,0 +1,6 @@
+movie,id,title,genre,year,plot
+mov_1,"The Matrix", "sci-fi",1999,"A hacker discovers reality is a simulation and joins a rebellion against machines."
+mov_2,"Inception", "sci-fi",2010,"A thief who steals secrets from dreams is given a chance to erase his criminal record."
+mov_3,"Interstellar", "sci-fi",2014,"Astronauts travel through a wormhole to find a habitable planet for humanity."
+mov_4,"The Dark Knight", "drama",2008,"Batman faces the Joker, a chaotic criminal threatening Gotham City."
+mov_5,"Toy Story", "animation",1995,"Toys come to life when humans aren't watching and go on adventures."
