@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import json
 
-load_dotenv(dotenv_path=r"\openai-venv\.env")
+dotenv_path = os.path.join(os.path.dirname(__file__), "..", "04_rag_vector_db", ".env")
+load_dotenv(dotenv_path)
+load_dotenv()
 API_KEY=os.getenv("GEMINI_API_KEY")
 
 
@@ -30,8 +32,8 @@ def embed_batch(texts):
 # 🛠️ Set cosine similarity distance space
 client = chromadb.Client()
 collection = client.get_or_create_collection(
-    name="movie_catalog",
-    metadata={"hnsw:space": "cosine"} # 👈 Guarantees cosine distance accuracy
+     name="movie_catalog",
+    metadata={"hnsw:space": "cosine"}
 )
 
 base = os.path.dirname(__file__)
@@ -42,7 +44,7 @@ with open(os.path.join(base, "movie.txt"), newline="", encoding="utf-8") as f:
     for row in reader:
         movies.append({"id": row[0], "title": row[1], "genre": row[2], "year": int(row[3]), "plot": row[4]})
 
-# ⚡ Single network request for all embeddings!
+
 plots = [m["plot"] for m in movies]
 embeddings = embed_batch(plots)
 

@@ -1,0 +1,8 @@
+id,title,company,description,remote,salary_min,location
+job_1,Senior Backend Engineer,Spotify,"Build and scale microservices handling millions of music streams daily using Python and Go",True,140000,Anywhere
+job_2,Frontend Developer,Airbnb,"Craft pixel-perfect React UIs for the world's largest hospitality platform",True,110000,Anywhere
+job_3,Data Scientist,Pfizer,"Analyze clinical trial data using Python and ML to accelerate drug discovery",False,130000,New York
+job_4,DevOps Engineer,Netflix,"Manage 1000+ microservices on AWS build CI/CD pipelines container orchestration",True,150000,Anywhere
+job_5,Embedded Systems Engineer,Tesla,"Write C++ firmware for autonomous vehicle control systems",False,120000,Austin
+job_6,ML Engineer,DeepMind,"Research and implement novel neural network architectures at scale",True,160000,Anywhere
+job_7,IT Support Specialist,Local Hospital,"Maintain internal networks troubleshoot Windows machines help desk tickets",False,55000,Chicago
