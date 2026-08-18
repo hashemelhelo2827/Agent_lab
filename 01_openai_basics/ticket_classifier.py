@@ -1,11 +1,14 @@
 import json
+import os
 from openai import OpenAI
+from dotenv import load_dotenv
 
 customer_input = input("Enter customer complaint: ")
 
+load_dotenv(r"..\openai-venv\.env")
 client = OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-    api_key="AQ.Ab8RN6L1O3TBhD43Nfji76qdJIa0KunIE69j_HMbJQuLlVZjbg"  
+    api_key=os.getenv("GEMINI_API_KEY")
 )
 
 prompt_1 = (

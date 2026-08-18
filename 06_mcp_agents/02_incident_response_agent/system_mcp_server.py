@@ -2,7 +2,7 @@
 from mcp.server.fastmcp import FastMCP
 import os
 import psutil
-mcp = FastMCP('filesystem inspector')
+mcp = FastMCP('system monitor')
 
 @mcp.tool()
 def list_directory_logs(folder_path: str)->list[dict]:

@@ -1,10 +1,13 @@
-import json  
+import json
+import os
 from openai import OpenAI
+from dotenv import load_dotenv
 
 x = input("Choose three random things in your fridge to cook: ")
 
+load_dotenv(r"..\openai-venv\.env")
 client = OpenAI(
-    api_key="AQ.Ab8RN6L1O3TBhD43Nfji76qdJIa0KunIE69j_HMbJQuLlVZjbg",  
+    api_key=os.getenv("GEMINI_API_KEY"),
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 

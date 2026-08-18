@@ -1,7 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 import sqlite3
 
-mcp = FastMCP('filesystem inspector')
+mcp = FastMCP('incident db')
 
 conn = sqlite3.connect("incidents.db", check_same_thread=False)
 cursor = conn.cursor()

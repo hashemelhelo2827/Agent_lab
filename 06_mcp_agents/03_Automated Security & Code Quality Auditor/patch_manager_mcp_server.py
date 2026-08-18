@@ -1,4 +1,5 @@
 from mcp.server import FastMCP
+import os
 
 mcp = FastMCP("patch manager")
 
@@ -24,7 +25,8 @@ def apply_patch(file_path: str, new_code: str) -> dict:
 
 @mcp.tool()
 def create_audit_log(file_path: str, summary: str) -> dict:
-    report_filename = f"audit_report_{file_path.replace('.', '_')}.md"
+    name, _ = os.path.splitext(os.path.basename(file_path))
+    report_filename = f"audit_report_{name}.md"
     
     try:
         content = f"# Security Audit Report\n\n**Target File:** `{file_path}`\n\n## Summary\n{summary}\n"

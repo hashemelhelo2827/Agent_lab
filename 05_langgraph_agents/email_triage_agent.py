@@ -8,7 +8,7 @@ from typing import TypedDict,Literal,Optional
 from langchain_core.prompts import ChatPromptTemplate
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"C:\Users\hashe\Desktop\Agent_lab\openai-venv\.env")
+load_dotenv(dotenv_path=r"..\openai-venv\.env")
 API_KEY=os.getenv("GEMINI_API_KEY")
 
 llm=ChatOpenAI(

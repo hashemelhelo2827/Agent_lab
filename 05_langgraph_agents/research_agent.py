@@ -10,12 +10,12 @@ import operator
 from dotenv import load_dotenv
 from langgraph.types import Send
 
-load_dotenv(dotenv_path=r"C:\Users\hashe\Desktop\Agent_lab\openai-venv\.env")
-API_KEY=os.getenv("GROQ_API_KEY")
+load_dotenv(dotenv_path=r"..\openai-venv\.env")
+API_KEY=os.getenv("Mistral_API_key")
 llm=ChatOpenAI(
-    model='llama-3.3-70b-versatile',
-    api_key=API_KEY,
-    base_url='https://api.groq.com/openai/v1'
+    model="mistral-medium-2604",
+        api_key=API_KEY,
+        base_url="https://api.mistral.ai/v1"
 )
 
 

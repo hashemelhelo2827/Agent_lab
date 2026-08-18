@@ -100,19 +100,23 @@ for i, meta in enumerate(results["metadatas"][0]):
     matches.append((dist, meta))
 
 if not matches:
-    if not matches:
-        print("No jobs match your filters. Showing unfiltered results instead.")
-        results = collection.query(
-            query_embeddings=[query_embedding],
-            n_results=10
-        )
+    print("No jobs match your filters. Showing unfiltered results instead.")
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=10
+    )
+    matches = []
+    for i, meta in enumerate(results["metadatas"][0]):
+        dist = results["distances"][0][i]
+        if dist > THRESHOLD:
+            continue
+        matches.append((dist, meta))
 
-else:
-    print(f"\nMatching jobs for: {user_input}\n")
-    print("Recommended:")
-    for rank, (dist, meta) in enumerate(matches, 1):
-        remote_tag = "remote" if meta["remote"] else "on-site"
-        print(f"  {rank}. {meta['title']} at {meta['company']} ({remote_tag})")
-        print(f"     Salary: ${meta['salary_min']:,} | Location: {meta['location']}")
-        print(f"     Match distance: {dist:.4f}")
-        print()
+print(f"\nMatching jobs for: {user_input}\n")
+print("Recommended:")
+for rank, (dist, meta) in enumerate(matches, 1):
+    remote_tag = "remote" if meta["remote"] else "on-site"
+    print(f"  {rank}. {meta['title']} at {meta['company']} ({remote_tag})")
+    print(f"     Salary: ${meta['salary_min']:,} | Location: {meta['location']}")
+    print(f"     Match distance: {dist:.4f}")
+    print()

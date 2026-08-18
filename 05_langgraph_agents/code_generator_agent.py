@@ -7,7 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import StateGraph,START,END
 
-load_dotenv(dotenv_path=r"C:\Users\hashe\Desktop\Agent_lab\openai-venv\.env")
+load_dotenv(dotenv_path=r"..\openai-venv\.env")
 API_KEY=os.getenv("GEMINI_API_KEY")
 
 class code(BaseModel):
@@ -21,7 +21,7 @@ class AgentState(TypedDict):
     iterations: int
 
 llm=ChatOpenAI(
-    model='gemini-2.0-flash-lite',
+    model='gemini-3.5-flash-lite',
     base_url='https://generativelanguage.googleapis.com/v1beta/openai/',
     api_key=API_KEY
 )

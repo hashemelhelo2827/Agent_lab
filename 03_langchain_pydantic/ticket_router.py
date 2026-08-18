@@ -1,16 +1,16 @@
-import openai
-import json
-from openai import OpenAI
+import os
 from typing import Optional
+from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
 
+load_dotenv(r"..\openai-venv\.env")
 llm = ChatOpenAI(
     model="gemini-2.5-flash",
-    api_key="AQ.Ab8RN6L1O3TBhD43Nfji76qdJIa0KunIE69j_HMbJQuLlVZjbg" , 
+    api_key=os.getenv("GEMINI_API_KEY") , 
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 

@@ -5,10 +5,16 @@ import re
 mcp = FastMCP("code_analysis")
 
 @mcp.tool()
-def analyze_syntax(code_string: str) -> dict:
+def analyze_syntax(file_path: str) -> dict:
     defcount = 0
     importcount = 0
     classcount = 0
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            code_string = f.read()
+    except Exception as e:
+        return {"error": f"Failed to read file: {str(e)}"}
+
     try:
         tree = ast.parse(code_string)
         for node in ast.walk(tree):

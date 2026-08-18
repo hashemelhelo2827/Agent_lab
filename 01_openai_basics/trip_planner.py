@@ -1,19 +1,24 @@
 import json
+import os
 from openai import OpenAI
+from dotenv import load_dotenv
 
 location=input("enter your location: ")
 num_of_days=input("enter the number of days: ")
 
-prompt_instructions=(f"use location {location} and number of days"
- f"{num_of_days} to creat a planner trip in jason format with this keys :"
- "destination: String (The city name)"
- "days: An array (list) of objects. Each object represents a day and should have:"
- "day_number: Integer (e.g., 1, 2)"
- "theme: String (e.g., Historic Landmarks or Food & Shopping)"
-'activities: A list of strings (at least 3 things to do that day)')
+prompt_instructions=(
+    f"Create a trip planner for location {location} for {num_of_days} days. "
+    "Return a strict JSON object with the following keys:\n"
+    "- 'destination': String (the city name)\n"
+    "- 'days': An array (list) of objects. Each object represents a day and must have:\n"
+    "    - 'day_number': Integer (e.g., 1, 2)\n"
+    "    - 'theme': String (e.g., Historic Landmarks or Food & Shopping)\n"
+    "    - 'activities': A list of strings (at least 3 things to do that day)"
+)
 
+load_dotenv(r"..\openai-venv\.env")
 client=OpenAI(
-    api_key="AQ.Ab8RN6L1O3TBhD43Nfji76qdJIa0KunIE69j_HMbJQuLlVZjbg",  
+    api_key=os.getenv("GEMINI_API_KEY"),
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 

@@ -1,41 +1,20 @@
 import os
 import asyncio
-from typing import TypedDict, Annotated, Optional
+from typing import TypedDict, Annotated
 from dotenv import load_dotenv
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, ToolMessage, AIMessage
 from langgraph.graph.message import add_messages
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 
 # Load Environment Variables
 load_dotenv(dotenv_path=r'../../openai-venv/.env')
 API_KEY = os.getenv('Mistral_API_key')
 
 
-client = MultiServerMCPClient(
-    {
-        "system_tools": {
-            "command": "python",
-            "args": ["system_mcp_server.py"],
-            "transport": "stdio",
-        },
-        "db_tools": {
-            "command": "python",
-            "args": ["db_mcp_server.py"],
-            "transport": "stdio",
-        },
-        "memory_tools": {
-            "command": "npx",
-            "args": ["-y", "@modelcontextprotocol/server-memory"],
-            "transport": "stdio",
-        }
-    }
-)
-
 class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
-    active_incident_id: Optional[str]
 
 
 SYSTEM_PROMPT = """You are an IT incident-response and systems operations agent.
@@ -70,18 +49,37 @@ def display_content(content) -> str:
 
 async def main():
    
+    client = MultiServerMCPClient(
+        {
+            "system_tools": {
+                "command": "python",
+                "args": ["system_mcp_server.py"],
+                "transport": "stdio",
+            },
+            "db_tools": {
+                "command": "python",
+                "args": ["db_mcp_server.py"],
+                "transport": "stdio",
+            },
+            "memory_tools": {
+                "command": "npx",
+                "args": ["-y", "@modelcontextprotocol/server-memory"],
+                "transport": "stdio",
+            }
+        }
+    )
     tools = await client.get_tools()
     
-    app = create_react_agent(
+    app = create_agent(
         model=model,
         tools=tools,
-        prompt=SYSTEM_PROMPT
+        system_prompt=SYSTEM_PROMPT
     )
     
     print("Agent ready. Tools:", ", ".join(sorted(t.name for t in tools)))
     print("Type 'exit' to quit.")
 
-    state: AgentState = {"messages": [], "active_incident_id": None}
+    state: AgentState = {"messages": []}
     
     while True:
         user = input("\nYou: ").strip()
@@ -92,6 +90,7 @@ async def main():
         
         try:
             async with asyncio.timeout(120):
+                event = None
                 async for event in app.astream(state, stream_mode="values"):
                     last = event["messages"][-1]
                     
@@ -102,10 +101,8 @@ async def main():
                         if content.strip():
                             print(content)
                             
-                state = {
-                    "messages": event["messages"],
-                    "active_incident_id": event.get("active_incident_id")
-                }
+                if event is not None:
+                    state = {"messages": event["messages"]}
                 
         except TimeoutError:
             print("\n[error] Turn timed out after 120s")

@@ -11,7 +11,7 @@ from langchain_core.runnables import RunnableParallel,RunnablePassthrough
 from pydantic import Field,BaseModel
 from dotenv import load_dotenv
 
-load_dotenv(dotenv_path=r"C:\Users\hashe\Desktop\Agent_lab\openai-venv\.env")
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env"))
 API_KEY=os.getenv("GEMINI_API_KEY")
 
 llm=ChatOpenAI(
@@ -78,7 +78,7 @@ text_splitter=RecursiveCharacterTextSplitter(
 
 chunk=text_splitter.split_documents(raw_data)
 
-vector_db=Chroma.from_documents(documents=chunk,embedding=embedding_model,persist_directory="./chroma_db")
+vector_db=Chroma.from_documents(documents=chunk,embedding=embedding_model)
 
 retriever=vector_db.as_retriever(search_kwargs={'k':4})
 

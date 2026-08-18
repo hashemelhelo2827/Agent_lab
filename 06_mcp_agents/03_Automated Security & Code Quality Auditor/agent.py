@@ -6,19 +6,7 @@ from pydantic import BaseModel, Field
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import JsonOutputParser
-from langchain.agents import create_react_agent
-
-with open("app.py", "w", encoding="utf-8") as f:
-    f.write('''import os
-
-API_KEY = "secret_12345"
-
-def calculate(user_input):
-    try:
-        return eval(user_input)
-    except:
-        return None
-''')
+from langchain.agents import create_agent
 
 
 class OutputSchema(BaseModel):
@@ -41,7 +29,7 @@ Your primary role is to inspect Python source code for security vulnerabilities,
 
 ### WORKFLOW INSTRUCTIONS:
 1. **Initial Inspection**:
-   - Run `analyze_syntax` to verify the code parses correctly and extract structural stats.
+   - Run `analyze_syntax` with the target file path to verify the code parses correctly and extract structural stats.
    - Run `run_linter` to identify security flaws (e.g., hardcoded secrets, `eval()`/`exec()` calls, bare `except:` blocks).
 
 2. **Patch & Refactor**:
@@ -58,7 +46,19 @@ Your primary role is to inspect Python source code for security vulnerabilities,
 
 
 async def main():
-    
+
+    with open("app.py", "w", encoding="utf-8") as f:
+        f.write('''import os
+
+API_KEY = "secret_12345"
+
+def calculate(user_input):
+    try:
+        return eval(user_input)
+    except:
+        return None
+''')
+
     client = MultiServerMCPClient({
         "code_analysis": {
             "command": "python",
@@ -72,23 +72,19 @@ async def main():
         }
     })
 
-    
     tools = await client.get_tools()
 
-    
     parser = JsonOutputParser(pydantic_object=OutputSchema)
     format_instructions = parser.get_format_instructions()
 
-    
-    agent = create_react_agent(
+    agent = create_agent(
         model=model,
         tools=tools,
-        prompt=SYSTEM_PROMPT.format(format_instructions=format_instructions)
+        system_prompt=SYSTEM_PROMPT.format(format_instructions=format_instructions)
     )
 
     user_input = input("Enter path to file or code to audit (e.g., app.py): ")
 
-    
     response = await agent.ainvoke({
         "messages": [("user", f"Audit the file: {user_input}")]
     })
