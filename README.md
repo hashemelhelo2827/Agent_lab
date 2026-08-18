@@ -21,10 +21,14 @@ A progressive journey through building LLM applications — starting with raw Op
 flowchart TB
     subgraph Lab1["🗄️ 01 — OpenAI Basics"]
         direction TB
+        A0["<b>Input</b><br/><i>User provides ingredients,<br/>location, or complaint</i>"]:::input
         A1["<b>recipe_generator.py</b><br/><i>3 ingredients → JSON recipe</i>"]:::file
         A2["<b>trip_planner.py</b><br/><i>Location + days → itinerary</i>"]:::file
         A3["<b>ticket_classifier.py</b><br/><i>Complaint → sentiment, dept, urgency</i>"]:::file
         A["<b>⚡ Key Skill</b><br/>JSON structured output<br/>via OpenAI API"]:::skill
+        A0 --> A1
+        A0 --> A2
+        A0 --> A3
         A1 ~~~ A2 ~~~ A3
         A1 --> A
         A2 --> A
@@ -56,9 +60,13 @@ flowchart TB
         direction TB
         D1["<b>customs_rag.py</b><br/><i>Cargo analysis vs rulebook</i>"]:::file
         D2["<b>baggage_routing_rag.py</b><br/><i>Baggage screening vs rules</i>"]:::file
-        D3["<b>biodome_inspection_rag.py</b><br/><i>Bio-dome cargo inspection</i>"]:::file
+D3["<b>biodome_inspection_rag.py</b><br/><i>Bio-dome cargo inspection</i>"]:::file
+        R["<b>📜 Rules</b><br/>rulebook.txt<br/>baggage_rules.txt<br/>biodome_rules.txt"]:::rules
         D["<b>⚡ Key Skill</b><br/>Chunk → Embed →<br/>Retrieve → Augment"]:::skill
         D1 --- D2 --- D3
+        R -.- D1
+        R -.- D2
+        R -.- D3
         D1 --> D
         D2 --> D
         D3 --> D
@@ -92,8 +100,10 @@ flowchart TB
     Lab4 -->|"<b>State Machines</b>"| Lab5
     Lab5 -->|"<b>Tool Servers</b>"| Lab6
 
+    classDef input fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
     classDef file fill:#ffffff,stroke:#546e7a,stroke-width:1px,color:#000
     classDef skill fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#000
+    classDef rules fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
 
     style Lab1 fill:#e1f5fe,stroke:#0288d1,stroke-width:3px,color:#000
     style Lab2 fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
