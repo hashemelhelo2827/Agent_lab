@@ -1,15 +1,29 @@
+<div align="center">
+
 # Agent Lab
 
-A progressive hands-on journey through LLM application development — from raw OpenAI API calls to multi-agent LangGraph workflows.
+*From raw API calls to multi-agent MCP workflows — a hands-on LLM engineering lab.*
+
+[![Python](https://img.shields.io/badge/Python-%3E%3D3.11-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org)
+[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![LangGraph](https://img.shields.io/badge/LangGraph-1C3C3C?style=flat-square&logo=langgraph)](https://langchain-ai.github.io/langgraph/)
+[![MCP](https://img.shields.io/badge/MCP-000000?style=flat-square&logo=modelcontextprotocol)](https://modelcontextprotocol.io)
+
+[Overview](#overview) • [Labs](#labs) • [Getting started](#getting-started) • [Usage](#usage) • [Project structure](#project-structure) • [Resources](#resources)
+
+</div>
+
+## Overview
+
+A progressive journey through building LLM applications — starting with raw OpenAI-compatible API calls, moving through vector search, structured-output chains, RAG, stateful agents, and finally Model Context Protocol (MCP) tool servers. Every exercise is a self-contained script you can run on its own.
 
 ```mermaid
 flowchart TB
     subgraph Lab1["🗄️ 01 — OpenAI Basics"]
         direction TB
-        A0["<b>Input</b><br/><i>User provides ingredients,<br/>location, or complaint</i>"]:::input
         A1["<b>recipe_generator.py</b><br/><i>3 ingredients → JSON recipe</i>"]:::file
         A2["<b>trip_planner.py</b><br/><i>Location + days → itinerary</i>"]:::file
-        A3["<b>ticket_classifier.py</b><br/><i>Complaint → sentiment,<br/>dept, urgency, order ID</i>"]:::file
+        A3["<b>ticket_classifier.py</b><br/><i>Complaint → sentiment, dept, urgency</i>"]:::file
         A["<b>⚡ Key Skill</b><br/>JSON structured output<br/>via OpenAI API"]:::skill
         A1 ~~~ A2 ~~~ A3
         A1 --> A
@@ -43,12 +57,8 @@ flowchart TB
         D1["<b>customs_rag.py</b><br/><i>Cargo analysis vs rulebook</i>"]:::file
         D2["<b>baggage_routing_rag.py</b><br/><i>Baggage screening vs rules</i>"]:::file
         D3["<b>biodome_inspection_rag.py</b><br/><i>Bio-dome cargo inspection</i>"]:::file
-        R["<b>📜 Rules</b><br/>rulebook.txt<br/>baggage_rules.txt<br/>biodome_rules.txt"]:::rules
         D["<b>⚡ Key Skill</b><br/>Chunk → Embed →<br/>Retrieve → Augment"]:::skill
         D1 --- D2 --- D3
-        R -.- D1
-        R -.- D2
-        R -.- D3
         D1 --> D
         D2 --> D
         D3 --> D
@@ -57,7 +67,7 @@ flowchart TB
         direction TB
         E1["<b>code_generator_agent.py</b><br/><i>Generate → Evaluate → Loop</i>"]:::file
         E2["<b>email_triage_agent.py</b><br/><i>Triage → Route</i>"]:::file
-        E3["<b>research_agent.py</b><br/><i>Questions → Parallel<br/>Research → Fact-check</i>"]:::file
+        E3["<b>research_agent.py</b><br/><i>Parallel research → fact-check</i>"]:::file
         E["<b>⚡ Key Skill</b><br/>Stateful graphs +<br/>conditional branching"]:::skill
         E1 --- E2 --- E3
         E1 --> E
@@ -82,10 +92,8 @@ flowchart TB
     Lab4 -->|"<b>State Machines</b>"| Lab5
     Lab5 -->|"<b>Tool Servers</b>"| Lab6
 
-    classDef input fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#000
     classDef file fill:#ffffff,stroke:#546e7a,stroke-width:1px,color:#000
     classDef skill fill:#fff9c4,stroke:#f9a825,stroke-width:2px,color:#000
-    classDef rules fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px,color:#000
 
     style Lab1 fill:#e1f5fe,stroke:#0288d1,stroke-width:3px,color:#000
     style Lab2 fill:#e8f5e9,stroke:#388e3c,stroke-width:3px,color:#000
@@ -95,156 +103,54 @@ flowchart TB
     style Lab6 fill:#e0f7fa,stroke:#00838f,stroke-width:3px,color:#000
 ```
 
----
+## Labs
 
-## Project Structure
+| Lab | Folder | What you'll build | Key skill |
+|-----|--------|-------------------|-----------|
+| 01 | `01_openai_basics/` | Recipe, itinerary and ticket classifier | JSON structured output |
+| 02 | `02_raw_chromadb/` | Movie recommender, job matcher, policy search | Raw ChromaDB + embeddings |
+| 03 | `03_langchain_pydantic/` | Ticket router, product tagger, customs manifest | Pydantic schemas + chains |
+| 04 | `04_rag_vector_db/` | Customs, baggage and bio-dome RAG | Retrieve-augmented generation |
+| 05 | `05_langgraph_agents/` | Code generator, email triage, research agent | Stateful graphs + branching |
+| 06 | `06_mcp_agents/` | Basic, incident-response and audit agents | MCP tool servers |
 
-```
-Agent_lab/
-├── 01_openai_basics/           # OpenAI API + JSON structured output
-│   ├── recipe_generator.py
-│   ├── trip_planner.py
-│   └── ticket_classifier.py
-├── 02_raw_chromadb/            # Raw ChromaDB (no wrapper)
-│   ├── 01_movie_recommender.py
-│   ├── 02_job_matcher.py
-│   ├── 03_doc_search.py
-│   ├── movie.txt
-│   ├── jobs.txt
-│   └── company_policies.txt
-├── 03_langchain_pydantic/      # LangChain chains + Pydantic schemas
-│   ├── ticket_router.py
-│   ├── product_tagger.py
-│   └── customs_manifest_analyzer.py
-├── 04_rag_vector_db/           # RAG with Chroma vector database
-│   ├── customs_rag.py
-│   ├── baggage_routing_rag.py
-│   ├── biodome_inspection_rag.py
-│   ├── baggage_rules.txt
-│   ├── biodome_rules.txt
-│   └── rulebook.txt
-├── 05_langgraph_agents/        # LangGraph stateful agent workflows
-│   ├── code_generator_agent.py
-│   ├── email_triage_agent.py
-│   └── research_agent.py
-├── 06_mcp_agents/              # MCP tool servers + agents
-│   ├── 01_basic_mcp_agent/
-│   ├── 02_incident_response_agent/
-│   └── 03_Automated Security & Code Quality Auditor/
-├── chroma_db/                  # Auto-generated vector store
-├── chroma_data/                # Auto-generated persistent ChromaDB
-├── openai-venv/                # Python virtual environment (gitignored)
-└── .gitignore
-```
+## Getting started
 
----
-
-## Labs Breakdown
-
-### 01 — OpenAI Basics
-
-| File | What it does | Key Concepts |
-|------|-------------|--------------|
-| `recipe_generator.py` | Takes 3 fridge ingredients → returns structured recipe JSON | `response_format={"type": "json_object"}`, basic API call |
-| `trip_planner.py` | Given location + days → generates a day-by-day itinerary | Prompt engineering, JSON parsing with `json.loads()` |
-| `ticket_classifier.py` | Classifies customer complaints (sentiment, department, urgency, order ID) | Few-shot prompting, structured extraction, conditional routing logic |
-
-**What you learn:** How to call OpenAI-compatible APIs, enforce JSON output, parse structured responses, and use few-shot examples.
-
----
-
-### 02 — Raw ChromaDB
-
-| File | What it does | Key Concepts |
-|------|-------------|--------------|
-| `01_movie_recommender.py` | Embeds movie plots, finds similar movies by cosine distance | Batch embeddings, similarity thresholds |
-| `02_job_matcher.py` | Matches job descriptions to user preferences with metadata filters | `where` filters, genre penalties, fallback logic |
-| `03_doc_search.py` | Searches company policies from a persistent Chroma store | `PersistentClient`, chunking policy docs |
-
-**What you learn:** Embed documents in batches, store them in ChromaDB, query by cosine distance, and combine metadata filters with semantic search.
-
----
-
-### 03 — LangChain + Pydantic
-
-| File | What it does | Key Concepts |
-|------|-------------|--------------|
-| `ticket_router.py` | LangChain reimplementation of the ticket classifier | `ChatPromptTemplate`, `JsonOutputParser`, `ChatOpenAI` |
-| `product_tagger.py` | Tags product category/condition, detects restricted items | Optional fields, boolean validation via Pydantic |
-| `customs_manifest_analyzer.py` | Analyzes shipping container cargo with nested item manifests | Nested Pydantic models, hazard detection, value calculation |
-
-**What you learn:** Replace manual API calls with LangChain chains, define output schemas with Pydantic, handle nested data structures.
-
----
-
-### 04 — RAG with Chroma Vector DB
-
-| File | What it does | Key Concepts |
-|------|-------------|--------------|
-| `customs_rag.py` | Analyzes cargo against `rulebook.txt` customs laws | `TextLoader`, `RecursiveCharacterTextSplitter`, Chroma vector store |
-| `baggage_routing_rag.py` | Routes airport baggage per `baggage_rules.txt` security rules | `RunnableParallel`, context retrieval, `format_docs` |
-| `biodome_inspection_rag.py` | Inspects bio-dome cargo (biomass/machinery) per `biodome_rules.txt` | Discriminated unions, quarantine protocol override logic |
-
-**Rule files:**
-- `rulebook.txt` — 5 customs risk classification rules (101–105)
-- `baggage_rules.txt` — 3 airport security & routing rules (A–C)
-- `biodome_rules.txt` — 4 planetary bio-dome safety protocols (Alpha–Gamma + Override)
-
-**What you learn:** Load and chunk documents, embed them into a vector DB, retrieve relevant context, and augment LLM prompts with retrieved data.
-
----
-
-### 05 — LangGraph Agents
-
-| File | What it does | Key Concepts |
-|------|-------------|--------------|
-| `code_generator_agent.py` | Generates Python code, evaluates syntax + requirements, loops up to 3 iterations for self-correction | `StateGraph`, conditional edges, max-iteration guard |
-| `email_triage_agent.py` | Triages incoming email, routes to escalation or standard processing based on sentiment + category | Branching workflows, `TypedDict` state, multi-node graph |
-| `research_agent.py` | Generates 3 research questions → parallel research workers → compiles report → fact-checks → recompiles if contradictory | `Send` for parallel fan-out, fact-checking validation loop |
-
-**What you learn:** Build stateful multi-node workflows, use conditional branching, implement parallel execution with `Send`, create self-correcting loops with validation gates.
-
----
-
-### 06 — MCP Agents
-
-| Folder | What it does | Key Concepts |
-|--------|-------------|--------------|
-| `01_basic_mcp_agent` | Single MCP server exposing tools (matrix trace, system status) consumed by an agent | `FastMCP`, `MultiServerMCPClient`, `create_agent` |
-| `02_incident_response_agent` | Incident-response agent combining system monitoring, incident DB, and long-term memory MCP servers | Multi-server stdio MCP, interactive REPL agent |
-| `03_Automated Security & Code Quality Auditor` | Audits Python files for vulnerabilities, patches them, and writes a Markdown audit report | Tool-use agents, patch workflow, audit report generation |
-
-**What you learn:** Build MCP tool servers, connect multiple servers to one agent, and combine tool use with agentic workflows.
-
----
-
-## Prerequisites
+### Prerequisites
 
 - Python 3.11+
-- API keys (store in `.env` files — already gitignored):
-  - **Gemini API key** — from [Google AI Studio](https://aistudio.google.com/)
-  - **Groq API key** — from [Groq Console](https://console.groq.com/) (required only for `research_agent.py`)
-  - **Mistral API key** — from [Mistral](https://console.mistral.ai/) (required only for `06_mcp_agents/02` and `06_mcp_agents/03`)
+- API keys:
+  - **Gemini** — from [Google AI Studio](https://aistudio.google.com/) (labs 01-05)
+  - **Mistral** — from [Mistral](https://console.mistral.ai/) (labs 05-06)
+  - **Groq** — from [Groq](https://console.groq.com/) *(optional, lab 05 alternative)*
 
-## Setup
+### Setup
 
 ```bash
 git clone https://github.com/hashemelhelo2827/Agent_lab.git
 cd Agent_lab
 
-pip install openai langchain langchain-openai langchain-chroma langchain-google-genai langchain-community langgraph chromadb mcp langchain-mcp-adapters python-dotenv pydantic psutil
+python -m venv openai-venv
+openai-venv\Scripts\activate        # Windows
+source openai-venv/bin/activate     # macOS / Linux
+
+pip install -r requirements.txt
 ```
 
-Add your API keys to `openai-venv/.env` and/or `04_rag_vector_db/.env` using the format:
+Create `openai-venv/.env` with your keys:
+
 ```
-GEMINI_API_KEY=your_key_here
-GROQ_API_KEY=your_key_here    # optional — only for research_agent.py
-Mistral_API_key=your_key_here # optional — only for lab 06
+GEMINI_API_KEY=your_gemini_key
+Mistral_API_key=your_mistral_key
+GROQ_API_KEY=your_groq_key          # optional
 ```
+
+> [!IMPORTANT]
+> `.env` files are gitignored — keys never belong in source code or commits. If you fork or publish, keep them out of git.
 
 ## Usage
 
-Run any lab file independently — no cross-folder dependencies:
+Every script is self-contained — run it from its own folder:
 
 ```bash
 cd 01_openai_basics
@@ -254,16 +160,51 @@ cd ../04_rag_vector_db
 python customs_rag.py
 ```
 
-For MCP agents, run from the exercise folder:
+MCP lab agents spawn their tool servers automatically over `stdio`:
 
 ```bash
 cd 06_mcp_agents/02_incident_response_agent
 python agent.py
 ```
 
-## Notes
+### Lab details
 
-- `.env` files and `chroma_db/` folders are gitignored — secrets stay local, vector stores regenerate on first run
-- Each file is self-contained — you can run them in any order
-- Lab 06 exercises run their MCP servers via `stdio` subprocesses automatically
-- The project uses Gemini models via OpenAI-compatible endpoint (`generativelanguage.googleapis.com/v1beta/openai/`) and `langchain_google_genai` for embeddings
+- **01 · OpenAI basics** — call the Gemini API through an OpenAI-compatible endpoint, enforce `json_object` responses and parse them with `json.loads()`.
+- **02 · Raw ChromaDB** — batch-embed documents with `gemini-embedding-001`, store in ChromaDB, and query by cosine distance with metadata filters.
+- **03 · LangChain + Pydantic** — replace manual calls with `ChatPromptTemplate | llm | JsonOutputParser` chains and validate output with Pydantic models.
+- **04 · RAG** — chunk rule files, embed into a vector store, retrieve context, and augment prompts with it via `RunnableParallel`.
+- **05 · LangGraph agents** — build `StateGraph` workflows with conditional edges, parallel fan-out via `Send`, and self-correction loops.
+- **06 · MCP agents** — build `FastMCP` tool servers, connect several to one agent with `MultiServerMCPClient`, and drive them with `create_agent`.
+
+## Project structure
+
+```
+Agent_lab/
+├── 01_openai_basics/               # OpenAI API + JSON structured output
+├── 02_raw_chromadb/                # Raw ChromaDB (no wrapper)
+├── 03_langchain_pydantic/          # LangChain chains + Pydantic schemas
+├── 04_rag_vector_db/               # RAG with Chroma vector database
+│   ├── *_rag.py                    # customs / baggage / biodome
+│   └── *_rules.txt                 # context documents
+├── 05_langgraph_agents/            # LangGraph stateful agent workflows
+├── 06_mcp_agents/                  # MCP tool servers + agents
+│   ├── 01_basic_mcp_agent/
+│   ├── 02_incident_response_agent/
+│   └── 03_Automated Security & Code Quality Auditor/
+├── requirements.txt                # pinned dependencies
+├── LICENSE                         # MIT license
+├── openai-venv/                    # virtual environment (gitignored)
+└── .gitignore
+```
+
+> [!NOTE]
+> `chroma_db/`, `chroma_data/` and `.env` are gitignored — vector stores regenerate on first run and secrets stay local. Each script has no cross-folder imports, so you can run them in any order.
+
+## Resources
+
+- [Gemini API (OpenAI-compatible)](https://ai.google.dev/gemini-api/docs/openai) — endpoint used across the labs
+- [ChromaDB](https://docs.trychroma.com/) — vector database
+- [LangChain](https://python.langchain.com/docs) — chains, parsers, RAG
+- [LangGraph](https://langchain-ai.github.io/langgraph/) — stateful agent graphs
+- [Model Context Protocol](https://modelcontextprotocol.io) — MCP tool servers
+- [Mistral](https://docs.mistral.ai/) — models used by labs 05-06
